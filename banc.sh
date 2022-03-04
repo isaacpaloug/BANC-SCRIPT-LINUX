@@ -57,7 +57,7 @@ function escriure (){
             if [ "$(echo "$DATE" | grep -E "^20[0-9]{2}-[01][0-9]-[0-3][0-9]$")" == "" ]; then
             echo "No es una data vàlida";
             else
-                echo "$DATE $CONCEPTE $QUANTITAT" >> banc.txt
+                echo "$DATE $CONCEPTE $QUANTITAT" >> $BANC_FILE
             fi
         fi
 }
