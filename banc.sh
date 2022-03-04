@@ -6,7 +6,7 @@ BANC_FILE=banc.txt
 function createFile (){
     if ! touch $BANC_FILE
     then
-        echo "5: Error al crear el fitxer"
+        echo "Error 5: Error al crear el fitxer"
     fi
 }
 # 2 - Fitxer d'ajuda
@@ -70,10 +70,32 @@ do
     fi
 done
 
+# 4 - Cercar un moviment bancari.
+function cercar (){
+    shift
+    palabra="$1"
+    grep -r -i "$palabra" $BANC_FILE
+}
 
+for arg in "$@" 
+do
+    if [ "$arg" == "-search" ] || [ "$arg" == "-s" ] 
+    then
+        cercar $@
+    fi
+done
 
+# 5 - Pinta la llista ordenada per data
 
+for arg in "$@" 
+do
+    if [ "$arg" == "-list" ] || [ "$arg" == "-l" ] 
+    then
+        sort $BANC_FILE
+    fi
+done
 
+# INICIO APP
 function iniciarApp(){
     createFile
 }
