@@ -95,6 +95,20 @@ do
     fi
 done
 
+# 
+function total() {
+
+    awk '{s+=$3} END {print "Total="s}' "$BANC_FILE"
+}
+
+for arg in "$@" 
+do
+    if [ "$arg" == "-total" ] || [ "$arg" == "-t" ] 
+    then
+        total
+    fi
+done
+
 # INICIO APP
 function iniciarApp(){
     createFile
