@@ -1,18 +1,14 @@
 #!/bin/bash
 clear
+BANC_FILE=banc.txt
 
 # 1 - En cas de no està generat que generi un arxiu banc.txt.
-
-function crearFitxer (){
-FICHERO=banc.txt
-if [ -f $FICHERO ]
-then
-    echo
-else
-    touch banc.txt
-fi
+function createFile (){
+    if ! touch $BANC_FILE
+    then
+        echo "5: Error al crear el fitxer"
+    fi
 }
-
 # 2 - Fitxer d'ajuda
 
 function ajuda (){
@@ -39,11 +35,6 @@ function ajuda (){
     echo "    5 Hi ha un error d'entrada/sortida a .banc.txt                                |"
 }
 
-
-
-
-
-
 for arg in "$@" 
 do
     if [ "$arg" == "-help" ] || [ "$arg" == "-h" ] 
@@ -54,11 +45,36 @@ done
 
 # 3 - Escriure al txt
 
+function escriure (){
+        shift
+        DATE="$1"
+        CONCEPTE="$2"
+        QUANTITAT="$3"
+        if [ $# != 3 ]
+        then
+            echo "Error 3: Mínim número de paràmetres: 3"
+        else
+            if [ "$(echo "$DATE" | grep -E "^20[0-9]{2}-[01][0-9]-[0-3][0-9]$")" == "" ]; then
+            echo "No es una data vàlida";
+            else
+                echo "$DATE $CONCEPTE $QUANTITAT" >> banc.txt
+            fi
+        fi
+}
+
 for arg in "$@" 
 do
     if [ "$arg" == "-add" ] || [ "$arg" == "-a" ] 
     then
-        crearFitxer
-        echo "HOla puta"
+        escriure $@
     fi
 done
+
+
+
+
+
+function iniciarApp(){
+    createFile
+}
+iniciarApp
