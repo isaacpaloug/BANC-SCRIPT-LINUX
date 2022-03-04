@@ -91,7 +91,7 @@ for arg in "$@"
 do
     if [ "$arg" == "-list" ] || [ "$arg" == "-l" ] 
     then
-        sort $BANC_FILE
+        sort -nk 1 $BANC_FILE
     fi
 done
 
