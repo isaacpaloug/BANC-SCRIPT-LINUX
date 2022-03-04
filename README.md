@@ -2,10 +2,10 @@
 # Realitzar un script amb el nom ‘banc’, el que ha de fer és:
 
 
-## **1 - En cas de no està generat que generi un arxiu banc.txt.**
+### **1 - En cas de no està generat que generi un arxiu banc.txt.**
 
 
-## **2 - Amb l’script s’han de poder executar les següents comandes:**
+### **2 - Amb l’script s’han de poder executar les següents comandes:**
 
 >./banc.sh -help / -h
 
@@ -50,7 +50,7 @@ Calcula el total de saldo del compte.
 
 
 
-## **3 - S’ha de fer un control d’errors i en cas d’error ha de tornar un missatge amb l’estructura següent:**
+### **3 - S’ha de fer un control d’errors i en cas d’error ha de tornar un missatge amb l’estructura següent:**
 
 
 NomComanda: linea NumLinea: Error CodiError: Missatge
