@@ -1,7 +1,5 @@
 #!/bin/bash
 clear
-# FUNCIONES
-
 
 # MENU
 function menu(){
@@ -48,35 +46,79 @@ do
         ayuda
     fi
 done
+
 # ###################################################################################################################
 # FUNCIONS DE OPCIONS ###############################################################################################
 # ###################################################################################################################
 
 # FUNCIO AFEGIR MOVIMENT BANCARI
 function add() {
+    validate_number='^-?[0-9]+([.][0-9]+)?$'
     echo "HAS TRIAT L'OPCIÓ PER AFEGIR UN MOVIMENT BANCARI:"
     read -r -p "Introdueix una data vàlida: " DATA
+    while true; do
+    if [ "$(echo "$DATA" | grep -E "^20[0-9]{2}-[01][0-9]-[0-3][0-9]$")" == "" ]; then
+    clear
+    echo "'$DATA' No es una data vàlida";
+    echo "__________________________________________________"
+    read -r -p "Introdueix una data vàlida: " DATA
+    else break
+    fi
+    done
     read -r -p "Introdueix el concepte: " CONCEPTE
+
     read -r -p "Introdueix la quantitat: " QUANTITAT
+    while true; do
+    if [ -n "$QUANTITAT" ] \
+        && [ "$QUANTITAT" != "0" ] \
+        && [ "$(echo "$QUANTITAT" | awk '{ print $1*1 }')" != "$QUANTITAT" ]; then
+
+        echo $LINENO "'$QUANTITAT' no és un número" 2      
+    echo "___________________________________________________"
+    read -r -p "Introdueix la quantitat: " QUANTITAT
+    else break
+    fi
+    done
+
     ./banc.sh -add "$DATA" "$CONCEPTE" "$QUANTITAT"
-    elegir_menu
+    triar_menu
 }
+
+
+
+
 #FUNCIO CERCAR MOVIMENT BANCARI
 function cercar() {
     echo "HAS TRIAT L'OPCIÓ DE CERCAR UN MOVIMENT BANCARI."
     read -r -p "Introdueix element a cercar: " PARAULA
     ./banc.sh -s "$PARAULA"
-    elegir_menu
+    triar_menu
 }
-function opcio_incorrecte() {
-    echo "La opció '$1' és incorrecte."
-    elegir_menu
-}
+
 # FUNCIÓ PER IMPRIMIR LLISTA DE MOVIMENTS BANCARIS
 function llista() {
     ./banc.sh -l
+    triar_menu
+}
+# FUNCIO PER CALCULAR EL SALDO TOTAL DEL COMPTE.
+function total() {
+    ./banc.sh -t
+    triar_menu
 }
 
+#FUNCIO PER SORTIR DEL PROGRAMA
+function sortir() {
+    exit
+}
+
+
+# ################################################################################
+
+#FUNCIO PER OPCIO INCORRECTE
+function opcio_incorrecte() {
+    echo "La opció '$1' és incorrecte."
+    triar_menu
+}
 # FUNCIÓ PER TRIAR EL MENU:
 
 function triar_menu() {
